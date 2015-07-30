@@ -15,10 +15,10 @@
 $inputdata = '/var/www/globalcommdev/webroot/AuctionData/rea/rbaa_';
 
 // SalesForce login details        ---------------------------------- 
-$sflogin = 'admin@xlerate.com';
+$sflogin = 'demo@gcsiweb.com';
 $sfwsdl = 'partner.wsdl.xml';
 $sfpassword = 'Gcsi4562';
-$sftoken = 'vveYeP6aTSG6CEUa52zW5SMe';
+$sftoken = 'I8YA9ecWzvoV7zocGox736Q1';
 
 // Owner and Account constants     ---------------------------------- 
 $sfOwnerID = "005j000000BTnZt";

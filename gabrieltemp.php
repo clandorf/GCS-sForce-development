@@ -2,7 +2,7 @@
 
 require_once('SforcePartnerClient.php');
 require_once('SforceHeaderOptions.php');
-require_once("aaTexconstants.php");
+require_once("devConstants.php");
 $mySforceConnection = new SforcePartnerClient();
 $mySoapClient = $mySforceConnection->createConnection($sfwsdl);
 $mylogin = $mySforceConnection->login($sflogin, $sfpassword . $sftoken);
