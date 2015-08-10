@@ -12,7 +12,7 @@
 //================================================================================================
 
 // File path for input data files  ---------------------------------- 
-$inputdata = '/var/www/globalcommdev/webroot/AuctionData/rea/rbaa_';
+$inputdata = '~/GCS-sForce-devolpemnt/testData/rbaa_';
 
 // SalesForce login details        ---------------------------------- 
 $sflogin = 'demo@gcsiweb.com';
@@ -20,13 +20,14 @@ $sfwsdl = 'partner.wsdl.xml';
 $sfpassword = 'Gcsi4562';
 $sftoken = 'I8YA9ecWzvoV7zocGox736Q1';
 
-// Owner and Account constants     ---------------------------------- 
-$sfOwnerID = "005j000000BTnZt";
-$sfAccount = '001j000000H7y3Z';
 
-// Missing buyer/seller info for vehicle load   --------------------- 
-$sfNoSeller = '001j000000H7y3b';
-$sfNoRepID = "a04j00000045FwV";
+// Owner and Account constants     ----------------------------------
+$sfOwnerID = '00537000000QcYd';
+$sfAccount = '00137000003rwua';
+//  
+//  // Missing buyer/seller info for vehicle load   ---------------------
+$sfNoSeller = '00137000003rwuk';
+$sfNoRepID = 'a0537000000dEXv';
 
 // Indicate whether to make SF calls (test feature)   --------------- 
 $store = 1;

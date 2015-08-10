@@ -241,7 +241,7 @@ echo("<P> ACCOUNT DETAILS- type: " . $sObject->type .
 
   function query_first($sfConn, $queryFields, $querySource, $queryMatch)
   {
-		echo("<P> query_first: " . $queryFields . " Source: " . $querySource . "Match?: " . $queryMatch . "<P>");
+		echo("<P> query_first: " . $queryFields . " Source: " . $querySource . " Match?: " . $queryMatch . "<P>");
         try
         {
             // The query process
@@ -268,8 +268,12 @@ echo("<P> ACCOUNT DETAILS- type: " . $sObject->type .
 				}
 				else
 				{
-				echo("<P> Query results size = 0 " . $queryResultsf->size . " <P>");
+					echo("<P> Query results size = 0 " . $queryResultsf->size . " <P>");
 				}
+			 gprint();
+			 gprint();
+			 gprint ("the contents of queryResult are " . print_r($queryResults));
+				gprint ("the contents of queryResultsf are " . print_r($queryResultsf));
 
             // Put the result counts into an array to pass back as the result.
             $successful = array();
@@ -323,6 +327,11 @@ echo("<P> QUERYLOCATOR, call!!! " . 	$queryLocator . " !! " . "<P>");
             exit;
         }
     
-    }
-	
+  }
+
+function gprint($string) { 
+	print "$string\n";
+}
 ?>	
+
+
