@@ -4,6 +4,7 @@ require_once('SforcePartnerClient.php');
 require_once('SforceHeaderOptions.php');
 require_once("devConstants.php");
 require_once('a_util.php');
+require_once('globalcommutil.php');
 
 $mySforceConnection = new SforcePartnerClient();
 $mySoapClient = $mySforceConnection->createConnection($sfwsdl);
