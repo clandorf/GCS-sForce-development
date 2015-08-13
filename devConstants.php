@@ -12,7 +12,7 @@
 //================================================================================================
 
 // File path for input data files  ---------------------------------- 
-$inputdata = '~/GCS-sForce-devolpemnt/testData/rbaa_';
+$inputdata = '~/GCS-sForce-development/testData/rbaa_';
 
 // SalesForce login details        ---------------------------------- 
 $sflogin = 'demo@gcsiweb.com';
