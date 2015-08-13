@@ -609,7 +609,6 @@ echo("<P> !!! FIELDS !!!   " .
 			$updateVehicleObjects = array ();
 			$numUpdateVehicles = 0;
 			}
-		} // end while loop, processing each mysql row. 
 	if ($numUpdateVehicles>0)
 		{
 		echo "Updating $numUpdateVehicles RepID records: " . $numUpdateVehicles . " <br>";
@@ -625,6 +624,7 @@ echo("<P> !!! FIELDS !!!   " .
 			}
 		echo "Updated $numUpdateVehicles records: " . $numUpdateVehicles . ", outside <br>";
 		}
+	} // end try block...  
 
 
 
