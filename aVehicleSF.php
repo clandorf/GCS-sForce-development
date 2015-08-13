@@ -455,7 +455,8 @@ echo( "<P>sf iaa sf tmp2 update table has been updated" );
 	$resultsql = mysql_query($querysql); 				
 	echo("<P> Num rows: " . mysql_num_rows($resultsql) . "<P>");
 	$sObjects = array ();
-	$i = 0;
+	$numCreateVehicles = 0;
+	$numUpdateVehicles = 0;
 	while ($row = mysql_fetch_array($resultsql))
       	{
 //----------set sql cells to varible and display-----------------------------------------------------------------
@@ -531,9 +532,26 @@ echo("<P> !!! FIELDS !!!   " .
 		$sObject = new stdclass();
 		$sObject->fields = $fields;
 		$sObject->type = 'Sale_Activity__c';    
-		array_push($sObjects, $sObject);
 
-		if ($i>$maxRecords)
+		$theId = null;
+
+		//checks if there is a vehicle with that owner, date, lotnumber. 
+		$theId = checkIfVehicleExists($deaown, $slsdt, $lotnum);
+
+		if( $theId != null){
+			$sObject->Id = $theId;
+			array_push($updateVehicleObjects, $sObject);
+			echo("<P> Increment number of Vehicles To Update: " . $numUpdateVehicles . "<P>");
+			$numUpdateVehicles++;
+		}
+		else{
+			array_push($sObjects, $sObject);
+			echo("<P> Increment number of Vehicles to Create: " . $numCreateVehicles . "<P>");
+			$numCreateVehicles++;
+		}
+
+
+		if ($numCreateVehicles>$maxRecords)
 			{
 			if ($store = 1)
 				{
@@ -548,16 +566,14 @@ echo("<P> !!! FIELDS !!!   " .
 				echo " Updated=$vehicle_updated <br>";
 				echo " Failed=$attends_failed <br>";
 				}
-			echo "Updated $i records, inside <br>";
+			echo "Updated $numCreateVehicles records, inside <br>";
 			$sObjects = array ();
-			$i = 0;
+			$numCreateVehicles = 0;
 			}
-		echo("<P> Increment i: " . $i . "<P>");
-		$i++;
-		}
-	if ($i>0)
+		} // end while loop, processing each mysql row. 
+	if ($numCreateVehicles>0)
 		{
-		echo "Updating $i RepID records: " . $i . " <br>";
+		echo "Updating $numCreateVehicles RepID records: " . $numCreateVehicles . " <br>";
 		if ($store = 1)
 			{
 			$success = create_multiple($mySforceConnection, $sObjects);
@@ -571,8 +587,48 @@ echo("<P> !!! FIELDS !!!   " .
 			echo " Updated=$vehicle_updated <br>";
 			echo " Failed=$attends_failed <br>";
 			}
-		echo "Updated $i records: " . $i . ", outside <br>";
+		echo "Updated $numCreateVehicles records: " . $numCreateVehicles . ", outside <br>";
 		}
+
+		if ($numUpdateVehicles>$maxRecords)
+			{
+			if ($store = 1)
+				{
+				$success = $sfConn->update($mySforceConnection, $updateVehicleObjects);
+				}
+			if (is_array($success))
+				{
+				$vehicle_created = $vehicle_created + $success[0];
+				$vehicle_updated = $vehicle_updated + $success[1];
+				$vehicle_failed =  $vehicle_failed + $success[2];
+				echo " ... believed updated =$vehicle_created <br>";
+				echo " Updated=$vehicle_updated <br>";
+				echo " Failed=$attends_failed <br>";
+				}
+			echo "Updated $numUpdateVehicles records, inside <br>";
+			$updateVehicleObjects = array ();
+			$numUpdateVehicles = 0;
+			}
+		} // end while loop, processing each mysql row. 
+	if ($numUpdateVehicles>0)
+		{
+		echo "Updating $numUpdateVehicles RepID records: " . $numUpdateVehicles . " <br>";
+			$success = $sfConn->update($mySforceConnection, $updateVehicleObjects);
+		if (is_array($success))
+			{
+			$vehicle_created = $vehicle_created + $success[0];
+			$vehicle_updated = $vehicle_updated + $success[1];
+			$vehicle_failed =  $vehicle_failed + $success[2];
+			echo " ... believed updated =$vehicle_created <br>";
+			echo " Updated=$vehicle_updated <br>";
+			echo " Failed=$attends_failed <br>";
+			}
+		echo "Updated $numUpdateVehicles records: " . $numUpdateVehicles . ", outside <br>";
+		}
+
+
+
+
 	echo("<P> Vehicle processing done. <P>");  
 //-------end of processing of vehicle input---------------------------------------------------------------------	
 	      
@@ -585,5 +641,22 @@ echo("<P> !!! FIELDS !!!   " .
 	   echo $e->faultstring;
        $ex = $e->faultstring;
 	   }
+
+	 function checkIfVehicleExists( $deaown, $slsdt, $lotnum){ 
+			
+		$querySource = "Sale_Activity__c";
+		$queryFields = "Id, OwnerID";
+		$queryMatch="OwnerID = '$deaown' AND Sale_Date__c = $slsdt AND Lot_Number__c = '$lotnum'";
+		
+		$foundStuff = query_first($sfConn, $queryFields, $querySource, $queryMatch);
+
+		$records = $foundStuff[0]->records;
+		$firstObject = $records[0];
+		$theId = $firstObject->Id;
+		echo "Found a record with that date... its id is ... " . $theId;
+
+	 	return $theId;
+	 }
+
 	   	
 ?>
