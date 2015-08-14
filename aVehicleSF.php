@@ -570,7 +570,6 @@ echo("<P> !!! FIELDS !!!   " .
 			$sObjects = array ();
 			$numCreateVehicles = 0;
 			}
-		} // end while loop, processing each mysql row. 
 	if ($numCreateVehicles>0)
 		{
 		echo "Updating $numCreateVehicles RepID records: " . $numCreateVehicles . " <br>";
@@ -624,12 +623,12 @@ echo("<P> !!! FIELDS !!!   " .
 			}
 		echo "Updated $numUpdateVehicles records: " . $numUpdateVehicles . ", outside <br>";
 		}
-	} // end try block...  
-
-
-
-
+	} // end while loop, processing each mysql row. 
 	echo("<P> Vehicle processing done. <P>");  
+
+
+
+
 //-------end of processing of vehicle input---------------------------------------------------------------------	
 	      
 //-----end of try construct		
